@@ -1,35 +1,35 @@
 <html>
 	<body>
 		<div align="center">
-			<a href="index.php">На главную</a>
+			<a href="index.php">РќР° РіР»Р°РІРЅСѓСЋ</a>
 			<hr>
-			<p>Регистрация клиента</p>
+			<p>Р РµРіРёСЃС‚СЂР°С†РёСЏ Р·Р°РєР°Р·С‡РёРєР°</p>
 			<form method="post">
-				Адрес электронной почты:
+				РђРґСЂРµСЃ СЌР»РµРєС‚СЂРѕРЅРЅРѕР№ РїРѕС‡С‚С‹:
 				<br>
 				<input type="text" name="mail">
 				<br>
-				Фамилия:
+				Р¤Р°РјРёР»РёСЏ:
 				<br>
 				<input type="text" name="surname">
 				<br>
-				Имя:
+				РРјСЏ:
 				<br>
 				<input type="text" name="name">
 				<br>
-				Отчество:
+				РћС‚С‡РµСЃС‚РІРѕ:
 				<br>
 				<input type="text" name="patronymic">
 				<br>
-				Пароль:
+				РџР°СЂРѕР»СЊ:
 				<br>
 				<input type="text" name="password">
 				<br>
-				Еше раз пароль:
+				РџР°СЂРѕР»СЊ РµС‰Рµ СЂР°Р·:
 				<br>
 				<input type="text" name="password_for_check">
 				<br><br>
-				<button name="submit" type="submit" value="submitted">Зарегистрироваться</button>
+				<button name="submit" type="submit" value="submitted">Р—Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊСЃСЏ</button>
 				<br>
 	
 				<?php
@@ -46,12 +46,14 @@
 						    $conn = new PDO('mysql:host=localhost;dbname=exchange', $username, $password);
 						    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);						    
 
-						    $query = $conn->prepare('SELECT * FROM client WHERE mail = :mail');						
-							$query->bindValue(':mail', $mail);	
-							$query->execute();
-							$query_res = $query->fetchAll();							
-							
-							if (empty($query_res)) {
+						    $query_for_check_registration = $conn->prepare('SELECT client.mail, executor.mail
+						    												FROM client, executor WHERE client.mail = :mail 
+						    												OR executor.mail = :mail');						
+							$query_for_check_registration->bindValue(':mail', $mail);	
+							$query_for_check_registration->execute();
+							$query_res_for_registration = $query_for_check_registration->fetchAll();	
+				
+							if (empty($query_res_for_registration)) {
 
 								$isInputEmpty = false;
 								foreach ($_POST as $key => $value) {
@@ -72,8 +74,8 @@
 										    $name = $_POST["name"];						   
 										    $patronymic = $_POST["patronymic"];
 										    $password = $_POST["password"];
-
-										    // HASH PASSWORD!!!!! 
+										    
+										    $password = password_hash($password, PASSWORD_DEFAULT);
 
 											$query = $conn->prepare('INSERT INTO client (mail, surname, name, patronymic, password) 
 																	 VALUES (:mail, :surname, :name, :patronymic, :password)');						
@@ -84,30 +86,31 @@
 											$query->bindValue(':password', $password);	
 											$query->bindValue(':mail', $mail);	
 											$query->execute();
-
-											echo "EMPTY Плейс. велком!";
+											//echo password_verify($p, $password);
+											echo "Р’СЃРµ РєР»Р°СЃСЃРЅРѕ! РґРѕР±СЂРѕ РїРѕР¶Р°Р»РѕРІР°С‚СЊ!";
+											echo '<br><a href="login.php">РўРµРїРµСЂСЊ РІС‹ РјРѕР¶РµС‚Рµ РІРѕР№С‚Рё РІ СЃРІРѕСЋ СѓС‡РµС‚РЅСѓСЋ Р·Р°РїРёСЃСЊ</a>';
 										} catch(PDOException $e) {
 										    echo 'ERROR: ' . $e->getMessage() . '<br>';
-										    echo "Упс, кажется вы испозуете запрещенные символы в своих данных";
+										    echo "РљР°Р¶РµС‚СЃСЏ РІС‹ РёСЃРїРѕР»СЊР·СѓРµС‚Рµ РІ СЃРІРѕРёС… РґР°РЅРЅС‹С… Р·Р°РїСЂРµС‰РµРЅРЅС‹Рµ СЃРёРјРІРѕР»С‹";
 										}									
 
 
 									} else {
-										echo "Ой, а вы ввели разные пароли";
+										echo "Р’Р°С€Рё РїР°СЂРѕР»Рё РЅРµ СЃРѕРІРїР°РґР°СЋС‚, РїРѕРїСЂРѕР±СѓР№С‚Рµ СЃРЅРѕРІР°";
 									}
 
 								} else {
-									echo "Заполните все поля и не оставляйте их пустыми";
+									echo "РЈРїСЃ, РєР°Р¶РµС‚СЃСЏ РІС‹ Р·Р°РїРѕР»РЅРёР»Рё РЅРµ РІСЃРµ С‚СЂРµР±СѓРµРјС‹Рµ РїРѕР»СЏ";
 								}
 
 							} else {
-								echo "Такой юзер у нас уже есть";
+								echo "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ СЃ С‚Р°РєРѕР№ РїРѕС‡С‚РѕР№ Сѓ РЅР°СЃ СѓР¶Рµ РµСЃС‚СЊ";
 							}
 
 
 						} catch(PDOException $e) {
 						    echo 'ERROR: ' . $e->getMessage() . '<br>';
-						    echo "Упс, проблемы с подключением к базе данных";
+						    echo "РѕР№-РѕР№, РїСЂРѕР±Р»РµРјС‹ СЃ РїРѕРґРєР»СЋС‡РµРЅРёРµРј Рє Р±Р°Р·Рµ РґР°РЅРЅС‹С…";
 						}
 
 

@@ -9,15 +9,15 @@
 <html>
 	<body>
 		<div align="center">
-			<p>Зарегистрируйтесь как</p>
+			<p>Р—Р°СЂРµРіРёСЃС‚СЂРёСЂСѓР№С‚РµСЃСЊ РєР°Рє</p>
 			<form>
-	  			<a href="register_client.php">Заказчик</a>
+	  			<a href="register_client.php">Р—Р°РєР°Р·С‡РёРє</a>
 			</form>
 			<form>
-	  			<a href="register_executor.php">Исполнитель</a>
+	  			<a href="register_executor.php">РСЃРїРѕР»РЅРёС‚РµР»СЊ</a>
 			</form>
 			<hr>
-			<a href="login.php">Войти в свою учетную запись</a>
+			<a href="login.php">РР»Рё РІРѕР№РґРёС‚Рµ РІ СЃРІРѕСЋ СѓС‡РµС‚РЅСѓСЋ Р·Р°РїРёСЃСЊ</a>
 		</div>
 	</body>
 </html>
