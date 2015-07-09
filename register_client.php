@@ -39,11 +39,11 @@
 		  			   //echo '<br>' . htmlspecialchars(print_r($_POST, true)) . '<br>';
 		  					   
 		  			    try {
-						    $username = "root";
-		  			   		$password = "";		  			   
+						    $db_username = "root";
+		  			   		$db_password = "";		  			   
 		  			   		$mail = $_POST["mail"];
 
-						    $conn = new PDO('mysql:host=localhost;dbname=exchange', $username, $password);
+						    $conn = new PDO('mysql:host=localhost;dbname=exchange', $db_username, $db_password);
 						    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);						    
 
 						    $query_for_check_registration = $conn->prepare('SELECT client.mail, executor.mail
@@ -86,7 +86,7 @@
 											$query->bindValue(':password', $password);	
 											$query->bindValue(':mail', $mail);	
 											$query->execute();
-											//echo password_verify($p, $password);
+		
 											echo "Все классно! добро пожаловать!";
 											echo '<br><a href="login.php">Теперь вы можете войти в свою учетную запись</a>';
 										} catch(PDOException $e) {
