@@ -1,28 +1,33 @@
 <?php
 	$error_message = "";
 	
- 	if($_POST) {
-		if (!empty($_POST["mail"]) && !empty($_POST["password"])) {
+ 	if($_GET) {
+		if (!empty($_GET["mail"]) && !empty($_GET["password"])) {
 			try {
     			$db_username = "root";
 			   	$db_password = "";		  			   
-			   	$mail = $_POST["mail"];
+			   	$mail = $_GET["mail"];
 
 			    $conn = new PDO('mysql:host=localhost;dbname=exchange', $db_username, $db_password);
 			    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);						    
 
-			    $query_for_check_registration = $conn->prepare('SELECT *
-			    												FROM client, executor WHERE client.mail = :mail 
-			    												OR executor.mail = :mail');	
+			    $query_for_check_client_registration = $conn->prepare('SELECT * FROM client WHERE client.mail = :mail ');	
+			    $query_for_check_client_registration->bindValue(':mail', $mail);	
+				$query_for_check_client_registration->execute();
+				$query_data_for_client_registration = $query_for_check_client_registration->fetchAll();	
 
-			    $query_for_check_registration->bindValue(':mail', $mail);	
-				$query_for_check_registration->execute();
-				$query_res_for_registration = $query_for_check_registration->fetchAll();	
 
-				$password = $_POST["password"];
+				$query_for_check_executor_registration = $conn->prepare('SELECT * FROM executor WHERE executor.mail = :mail ');	
+			    $query_for_check_executor_registration->bindValue(':mail', $mail);	
+				$query_for_check_executor_registration->execute();
+				$query_data_for_executor_registration = $query_for_check_executor_registration->fetchAll();	
 
-				if (!empty($query_res_for_registration)) {
-					$password_in_database = $query_res_for_registration[0][5];
+				
+
+				if (!empty($query_data_for_client_registration)) {
+					$password = $_GET["password"];
+					$password_in_database = $query_data_for_client_registration[0][5];
+					
 					if (password_verify($password, $password_in_database)) {
 						//$error_message = "Пароли совпали, добро пожаловать!";
 						setcookie("ExchangeService", $password_in_database, time() + 3600);
@@ -31,9 +36,23 @@
 						$error_message = "Пароль неверный";
 					}
 					
+				} elseif (!empty($query_data_for_executor_registration)) {
+					$password = $_GET["password"];
+					$password_in_database = $query_data_for_executor_registration[0][2];
+
+					if (password_verify($password, $password_in_database)) {
+						//$error_message = "Пароли совпали, добро пожаловать!";
+
+						// паррль тут всегда неверный!! еще не сделана регистрация исполнителя!
+						setcookie("ExchangeService", $password_in_database, time() + 3600);
+						header("Location: home_page_executor.php");
+					} else {						
+						$error_message = "Пароль неверный";
+					}
+
 				} else {
 					$error_message = "Такого пользователя у нас нет";
-				}								
+				}							
 
 			} catch(PDOException $e) {
 			    //echo 'ERROR: ' . $e->getMessage() . '<br>';
@@ -53,7 +72,7 @@
 			<hr>
 			<?php echo $error_message; ?>
 			<p>Войдите</p>
-			<form method="POST" action="login.php">
+			<form method="GET" action="login.php">
 				Адрес электронной почты:
 				<br>
 				<input type="email" name="mail"> 

@@ -1,7 +1,9 @@
 <?php
+
+	$error_message = "";
  	
- 	if($_POST) {			 
-		$error_message = "";
+ 	if($_POST) {	
+		
 		try {
 		    $db_username = "root";
 		   	$db_password = "";		  			   
@@ -51,7 +53,7 @@
 							$query->bindValue(':mail', $mail);	
 							$query->execute();
 
-							$error_message = 'Все классно! добро пожаловать!<br><a href="login.html">Теперь вы можете войти в свою учетную запись</a>';
+							$error_message = 'Все классно! добро пожаловать!<br><a href="login.php">Теперь вы можете войти в свою учетную запись</a>';
 						} catch(PDOException $e) {
 						    //echo 'ERROR: ' . $e->getMessage() . '<br>';
 						    $error_message = "Кажется вы используете в своих данных запрещенные символы";
