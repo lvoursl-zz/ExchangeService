@@ -6,4 +6,16 @@
 	} else {
 		header("Location: index.php");
 	}
+
+
 ?>
+
+<html>
+	<body>
+		<div align="center">
+			<p>Страница исполнителя</p>
+			<hr>
+			<a href="logout.php">Выход</a>
+		</div>
+	</body>
+</html>

@@ -42,8 +42,7 @@
 
 					if (password_verify($password, $password_in_database)) {
 						//$error_message = "Пароли совпали, добро пожаловать!";
-
-						// паррль тут всегда неверный!! еще не сделана регистрация исполнителя!
+						
 						setcookie("ExchangeService", $password_in_database, time() + 3600);
 						header("Location: home_page_executor.php");
 					} else {						
