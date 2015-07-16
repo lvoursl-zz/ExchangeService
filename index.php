@@ -1,6 +1,6 @@
 <?php
 	if (!empty($_COOKIE["ExchangeService"])) {
-		// check cookies with hash in DataBase and if true - redirect
+		/// check hash in cookies with hash in DataBase	
 
 		try {
 			
@@ -35,6 +35,7 @@
 		} catch(PDOException $e) {
 		    //echo 'ERROR: ' . $e->getMessage() . '<br>';
 		    //$error_message = "ой-ой, проблемы с подключением к базе данных";
+		    header("Location: index.php");
 		}
 	}	
 

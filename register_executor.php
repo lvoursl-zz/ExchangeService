@@ -115,11 +115,11 @@
 				<br>
 				Пароль:
 				<br>
-				<input type="text" name="password">
+				<input type="password" name="password">
 				<br>
 				Пароль еще раз:
 				<br>
-				<input type="text" name="password_for_check">
+				<input type="password" name="password_for_check">
 				<br><br>
 				<button name="submit" type="submit" value="submitted">Зарегистрироваться</button>
 				<br>

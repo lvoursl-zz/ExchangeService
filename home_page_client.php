@@ -1,8 +1,9 @@
 <?php
 
-	if (!is_null($_COOKIE["ExchangeService"])) {
-		// check cookies with hash in DataBase
-			
+	if (!empty($_COOKIE["ExchangeService"])) {
+		
+		// check hash in cookies with hash in DataBase	
+
 		$db_username = "root";
 	   	$db_password = "";		  			   
 	   	$cookie_password = $_COOKIE["ExchangeService"];
@@ -16,13 +17,27 @@
 		$query_res_for_password = $query_for_check_password->fetchAll();	
 
 
-		if (!empty($query_res_for_password)) {
-			echo "HOMEPAGE Welcome";
-		} else {
+		if (empty($query_res_for_password)) {
+			// incorrect hash in cookies			
 			header("Location: index.php");	
 		}
 
 	} else {
+		// cookies is empty
 		header("Location: index.php");
 	}
 ?>
+
+
+<html>
+	<body>
+		<div align="center">
+			<p>Страница заказчика</p>
+			<hr>
+			<a href="create_order.php">Создать заказ</a>
+			Моя страница
+			<a href="client_orders.php">Мои заказы</a>
+			<a href="logout.php">Выход</a>
+		</div>
+	</body>
+</html>
