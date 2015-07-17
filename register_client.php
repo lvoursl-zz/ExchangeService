@@ -1,5 +1,13 @@
 <?php
 
+	require_once 'functions.php';
+
+	if (is_executor_cookies_correct() === true) {
+		header("Location: home_page_executor.php");	
+	} elseif (is_client_cookies_correct() === true) {
+		header("Location: home_page_client.php");
+	} 
+
 	$error_message = "";
  	
  	if($_POST) {	
@@ -21,16 +29,7 @@
 
 			if (empty($query_res_for_registration)) {
 
-				$isInputEmpty = false;
-				foreach ($_POST as $key => $value) {
-					//echo "POST parameter '$key' has '$value'" . '<br>';
-					if (empty($value)) {
-						$isInputEmpty = true;										
-						break;
-					} 
-				}
-
-				if ($isInputEmpty == false) {
+				if (is_array_have_empty_values($_POST) === false) {
 
 					if ($_POST["password"] == $_POST["password_for_check"]) {									
 

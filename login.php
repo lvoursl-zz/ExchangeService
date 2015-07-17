@@ -1,4 +1,13 @@
 <?php
+	
+	require_once 'functions.php';
+
+	if (is_executor_cookies_correct() === true) {
+		header("Location: home_page_executor.php");	
+	} elseif (is_client_cookies_correct() === true) {
+		header("Location: home_page_client.php");
+	} 
+
 	$error_message = "";
 	
  	if($_GET) {
@@ -21,15 +30,14 @@
 			    $query_for_check_executor_registration->bindValue(':mail', $mail);	
 				$query_for_check_executor_registration->execute();
 				$query_data_for_executor_registration = $query_for_check_executor_registration->fetchAll();	
-
-				
+			
 
 				if (!empty($query_data_for_client_registration)) {
 					$password = $_GET["password"];
 					$password_in_database = $query_data_for_client_registration[0][5];
 					
 					if (password_verify($password, $password_in_database)) {
-						//$error_message = "Пароли совпали, добро пожаловать!";
+						// everything is good, redirect	
 						setcookie("ExchangeService", $password_in_database, time() + 3600);
 						header("Location: home_page_client.php");
 					} else {						
@@ -41,8 +49,7 @@
 					$password_in_database = $query_data_for_executor_registration[0][2];
 
 					if (password_verify($password, $password_in_database)) {
-						//$error_message = "Пароли совпали, добро пожаловать!";
-						
+						// everything is good, redirect						
 						setcookie("ExchangeService", $password_in_database, time() + 3600);
 						header("Location: home_page_executor.php");
 					} else {						

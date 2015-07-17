@@ -1,5 +1,13 @@
 <?php
 
+	require_once 'functions.php';
+
+	if (is_client_cookies_correct() === false) {
+		header("Location: index.php");
+	} else {
+		
+	}
+
 
 ?>
 

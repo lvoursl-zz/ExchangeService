@@ -1,6 +1,16 @@
 <?php
 
+	require_once 'functions.php';
 
+	if (is_client_cookies_correct() === false) {
+		header("Location: index.php");
+	} else {
+
+		if (is_array_have_empty_values($_POST) === false) {
+
+			
+		}
+	}
 
 ?>
 
@@ -30,10 +40,10 @@
 				<br>
 			    <select name="section">
 			    <option disabled>Выберите раздел</option>
-			    <option value=""></option>
-			    <option value=""></option>
-			    <option value=""></option>
-			    <option value=""></option>
+			    <option value="">Раздел0</option>
+			    <option value="">Раздел1</option>
+			    <option value="">Раздел2</option>
+			    <option value="">Раздел3</option>
 			   	</select>
 				<br>
 				Теги:

@@ -1,31 +1,13 @@
 <?php
 
-	if (!empty($_COOKIE["ExchangeService"])) {
-		
-		// check hash in cookies with hash in DataBase	
+	require_once 'functions.php';
 
-		$db_username = "root";
-	   	$db_password = "";		  			   
-	   	$cookie_password = $_COOKIE["ExchangeService"];
-
-	    $conn = new PDO('mysql:host=localhost;dbname=exchange', $db_username, $db_password);
-	    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);						    
-
-	    $query_for_check_password = $conn->prepare('SELECT * FROM client WHERE client.password = :password');						
-		$query_for_check_password->bindValue(':password', $cookie_password);	
-		$query_for_check_password->execute();
-		$query_res_for_password = $query_for_check_password->fetchAll();	
-
-
-		if (empty($query_res_for_password)) {
-			// incorrect hash in cookies			
-			header("Location: index.php");	
-		}
-
-	} else {
-		// cookies is empty
+	if (is_client_cookies_correct() === false) {
 		header("Location: index.php");
+	} else {
+		
 	}
+
 ?>
 
 
