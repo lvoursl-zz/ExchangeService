@@ -12,12 +12,10 @@
 
  	if($_POST) {			 
 		
-		try {
-		    $db_username = "root";
-		   	$db_password = "";		  			   
+		try {	  			   
 		   	$mail = $_POST["mail"];
 
-		    $conn = new PDO('mysql:host=localhost;dbname=exchange', $db_username, $db_password);
+		    $conn = new PDO('mysql:host=localhost;dbname=exchange', DB_USERNAME, DB_PASSWORD);
 		    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);						    
 
 		    $query_for_check_registration = $conn->prepare('SELECT client.mail, executor.mail

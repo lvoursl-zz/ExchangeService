@@ -12,12 +12,10 @@
 	
  	if($_GET) {
 		if (!empty($_GET["mail"]) && !empty($_GET["password"])) {
-			try {
-    			$db_username = "root";
-			   	$db_password = "";		  			   
+			try {	  			   
 			   	$mail = $_GET["mail"];
 
-			    $conn = new PDO('mysql:host=localhost;dbname=exchange', $db_username, $db_password);
+			    $conn = new PDO('mysql:host=localhost;dbname=exchange', DB_USERNAME, DB_PASSWORD);
 			    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);						    
 
 			    $query_for_check_client_registration = $conn->prepare('SELECT * FROM client WHERE client.mail = :mail ');	
