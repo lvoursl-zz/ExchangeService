@@ -20,6 +20,7 @@
 			Моя страница
 			<a href="client_orders.php">Мои заказы</a>
 			<a href="logout.php">Выход</a>
+			<hr>
 		</div>
 	</body>
 </html>

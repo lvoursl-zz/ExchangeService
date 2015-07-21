@@ -76,7 +76,7 @@
 			<hr>
 			<?php echo $error_message; ?>
 			<p>Войдите</p>
-			<form method="GET" action="login.php">
+			<form method="GET">
 				Адрес электронной почты:
 				<br>
 				<input type="email" name="mail"> 
