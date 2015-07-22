@@ -24,13 +24,13 @@
 			<hr>			
 			<?php
 				if (empty($client_orders))  {
-					echo "В данный момент у вас нет заказов";
+					echo "В данный момент вы не создали заказов";
 				} else {					
 					$array_length = count($client_orders);
 					//echo $client_orders[0]['description'];
 					
 					for ($i = 0; $i < $array_length; $i++) { 
-						echo '<a href="order.php?id=' . $client_orders[$i]['id'] . '">'. $client_orders[$i]['name']  . '</a>' . '<br>'; 							
+						echo '<a href="order_page_client.php?id=' . $client_orders[$i]['id'] . '">'. $client_orders[$i]['name']  . '</a>' . '<br>'; 							
 					}
 				}
 

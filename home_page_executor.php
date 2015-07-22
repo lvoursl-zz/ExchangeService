@@ -15,7 +15,11 @@
 		<div align="center">
 			<p>Страница исполнителя</p>
 			<hr>
+			<a href="find_work_executor.php">Найти заказ</a>
+			<a href="executor_completed_orders.php">Мои выполненные заказы</a>
+			Моя страница		
 			<a href="logout.php">Выход</a>
+			<hr>
 		</div>
 	</body>
 </html>
