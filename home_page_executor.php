@@ -13,6 +13,7 @@
 <html>
 	<body>
 		<div align="center">
+			<h2>Страница исполнителя</h2>
 			<p>Страница исполнителя</p>
 			<hr>
 			<a href="find_work_executor.php">Найти заказ</a>

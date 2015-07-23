@@ -26,15 +26,17 @@
 					$order_description = $_POST["order_description"];	
 					$order_section = $_POST["order_section"];
 					$order_tags = $_POST["order_tags"];
+					$order_status = "created";
 					
-					$query_for_insert_order = $conn->prepare('INSERT INTO orders (client_id, section, name, description, tags) 
-													 VALUES (:client_id, :section, :name, :description, :tags)');						
+					$query_for_insert_order = $conn->prepare('INSERT INTO orders (client_id, section, name, description, tags, status) 
+													 VALUES (:client_id, :section, :name, :description, :tags, :status)');						
 							
 					$query_for_insert_order->bindValue(':client_id', $client_id);
 					$query_for_insert_order->bindValue(':section', $order_section);
 					$query_for_insert_order->bindValue(':name', $order_name);
 					$query_for_insert_order->bindValue(':description', $order_description);	
 					$query_for_insert_order->bindValue(':tags', $order_tags);	
+					$query_for_insert_order->bindValue(':status', $order_status);	
 					$query_for_insert_order->execute();
 
 					$error_message = "Ваш заказ успешно добавлен!";

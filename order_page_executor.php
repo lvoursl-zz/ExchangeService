@@ -38,7 +38,8 @@
 <html>
 	<body>
 		<div align="center">
-			<p>Страница исполнителя</p>
+			<h2>Страница исполнителя</h2>
+			<p>Страница заказа</p>
 			<hr>
 			<a href="find_work_executor.php">Найти заказ</a>
 			<a href="executor_completed_orders.php">Мои выполненные заказы</a>
@@ -49,6 +50,8 @@
 				echo 'Название: ' . $order[0]['name'] . '<br>';
 				echo 'Содержание: ' . $order[0]['description'] . '<br>';
 				echo 'Теги: ' . $order[0]['tags'] . '<br>';
+				echo 'Статус: ' . $order[0]['status'] . '<br>';
+				echo '<a href="accepting_order_executor.php?id=' . $order_id . '">'. 'Предложить исполнение заказа'  . '</a>' . '<br>';
 			?>
 		</div>
 	</body>
