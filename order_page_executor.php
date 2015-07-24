@@ -21,10 +21,40 @@
 			$query_for_getting_order->bindValue(':order_id', $order_id);
 			$query_for_getting_order->execute();
 			$order = $query_for_getting_order->fetchAll();		
+			$order_executors_id = $order[0]['executors_id'];
+			$order_executors_id = explode(",", $order_executors_id);
 
-			if (empty($order)) {
+			if (!empty($order)) {
+				
+				//take executors list and check current executor in list
+				$cookies_password = $_COOKIE["ExchangeService"];
+
+				$query_for_getting_current_executor_data = $conn->prepare('SELECT id FROM executor WHERE password = :cookies_password');
+				$query_for_getting_current_executor_data->bindValue(':cookies_password', $cookies_password);
+				$query_for_getting_current_executor_data->execute();
+
+				$current_executor_id = $query_for_getting_current_executor_data->fetchAll();
+				$current_executor_id = $current_executor_id[0]['id'];
+
+				if (isset($current_executor_id)) {
+					
+					$current_executor_accepted_order = false;
+					$order_executors_id_length = count($order_executors_id);
+
+					for ($i = 0; $i < $order_executors_id_length; $i++) { 
+						if ($current_executor_id == $order_executors_id[$i]) {
+							$current_executor_accepted_order = true;
+							break;
+						}
+					}
+
+				} else {
+					header("Location: find_work_executor.php"); 
+				}
+
+			} else {
 				header("Location: find_work_executor.php"); 
-			}	
+			}
 
 		} else {
 			header("Location: find_work_executor.php"); 
@@ -51,7 +81,11 @@
 				echo 'Содержание: ' . $order[0]['description'] . '<br>';
 				echo 'Теги: ' . $order[0]['tags'] . '<br>';
 				echo 'Статус: ' . $order[0]['status'] . '<br>';
-				echo '<a href="accepting_order_executor.php?id=' . $order_id . '">'. 'Предложить исполнение заказа'  . '</a>' . '<br>';
+				if ($current_executor_accepted_order) {
+					echo 'Вы ответили на этот заказ' . '<br>';
+				} else {
+					echo '<a href="accepting_order_executor.php?id=' . $order_id . '">'. 'Предложить исполнение заказа'  . '</a>' . '<br>';
+				}
 			?>
 		</div>
 	</body>
