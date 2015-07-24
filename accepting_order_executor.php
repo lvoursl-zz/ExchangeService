@@ -50,8 +50,12 @@
 				}
 
 				if ($first_answer_to_order == true) {
-					
-					array_push($order_executors_id, $current_executor_id);
+
+					if (empty($order_executors_id[0])) {
+						$order_executors_id[0] = $current_executor_id;
+					} else {
+						$order_executors_id[] = $current_executor_id;						
+					}
 					$order_executors_id = implode(",", $order_executors_id);
 
 					$query_for_add_current_executor = $conn->prepare('UPDATE orders SET executors_id = :order_executors_id WHERE id = :order_id');
